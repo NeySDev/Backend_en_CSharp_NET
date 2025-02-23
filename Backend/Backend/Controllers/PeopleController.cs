@@ -10,6 +10,20 @@ namespace Backend.Controllers
     {
         [HttpGet(Name = "All")]
         public List<People> GetPeoples() => Repository.People;
+
+        [HttpGet("{id}")]
+        public People GetPerson(int id)
+        {
+            var personFind = Repository.People.First(p => p.Id == id);
+            return personFind;
+        }
+
+        [HttpGet("search/{search}")]
+        public List<People> GetPerson(string search)
+        {
+            var personFind = Repository.People.Where(p => p.Name.ToUpper().Contains(search.ToUpper())).ToList();
+            return personFind;
+        }
     }
 
     #region DATA
