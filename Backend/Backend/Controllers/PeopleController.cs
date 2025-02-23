@@ -12,10 +12,14 @@ namespace Backend.Controllers
         public List<People> GetPeoples() => Repository.People;
 
         [HttpGet("{id}")]
-        public People GetPerson(int id)
+        public ActionResult<People> GetPerson(int id)
         {
-            var personFind = Repository.People.First(p => p.Id == id);
-            return personFind;
+            var personFind = Repository.People.FirstOrDefault(p => p.Id == id);
+
+            if(personFind == null)
+                return NotFound();
+
+            return Ok(personFind);
         }
 
         [HttpGet("search/{search}")]
