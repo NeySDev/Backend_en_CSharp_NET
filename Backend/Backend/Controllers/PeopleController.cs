@@ -28,6 +28,17 @@ namespace Backend.Controllers
             var personFind = Repository.People.Where(p => p.Name.ToUpper().Contains(search.ToUpper())).ToList();
             return personFind;
         }
+
+        [HttpPost]
+        public IActionResult Add(People people)
+        {
+            if (String.IsNullOrEmpty(people.Name))
+                return BadRequest();
+
+            Repository.People.Add(people);
+
+            return NoContent();
+        }
     }
 
     #region DATA
