@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Backend.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.NetworkInformation;
 
 namespace Backend.Controllers
 {
@@ -8,6 +7,13 @@ namespace Backend.Controllers
     [ApiController]
     public class PeopleController : ControllerBase
     {
+        private IPeopleService _peopleService;
+
+        public PeopleController()
+        {
+            _peopleService = new PeopleService();
+        }
+
         [HttpGet(Name = "All")]
         public List<People> GetPeoples() => Repository.People;
 
@@ -32,7 +38,7 @@ namespace Backend.Controllers
         [HttpPost]
         public IActionResult Add(People people)
         {
-            if (String.IsNullOrEmpty(people.Name))
+            if (!_peopleService.Validate(people))
                 return BadRequest();
 
             Repository.People.Add(people);
