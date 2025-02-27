@@ -9,9 +9,9 @@ namespace Backend.Controllers
     {
         private IPeopleService _peopleService;
 
-        public PeopleController()
+        public PeopleController(IPeopleService peopleService)
         {
-            _peopleService = new PeopleService();
+            _peopleService = peopleService;
         }
 
         [HttpGet(Name = "All")]
